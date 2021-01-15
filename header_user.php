@@ -1,5 +1,7 @@
 <?php
-include_once 'database.php';
+require_once 'database.php';
+require_once 'auth.php';
+forcer_utilisateur_connecte();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -10,22 +12,23 @@ include_once 'database.php';
   </head>
  <header>
     <div id="logo">
-        <a href="index.php"><img src="images/logo_gbaf.jpg"></a>
+        <a href="accueil.php"><img src="images/logo_gbaf.jpg"></a>
     </div>
-        <nav>
-        <a href="compte.php"><img class="icon" src=""></a>
-        <a href='accueil.php?deconnexion=true'><span>Déconnexion</span></a>
-        </nav>
-        <?php
-    if(isset($_GET['deconnexion'])){ 
-        if($_GET['deconnexion']==true){  
-            session_unset();
-            header("location:connexion.php");
-        }
-    }else if($_SESSION['pseudo'] !== ""){
-        $user = $_SESSION['pseudo'];
-        echo "Bonjour $user, vous êtes connectés !";
-    }
-?>
+        <ul class="navbar-nav mr auto">
+            <? nav_menu('nav-link') ?>
+        </ul>
+        <ul class="navbar-nav">
+        <div id="content">
+            <?php
+              if($_SESSION['pseudo'] !== "") {
+                $user = $_SESSION['pseudo'];
+                echo "Bonjour $user, vous êtes connecté";
+                }
+            ?>
+          </div>
+        <?php if(est_connecte()): ?>
+            <li class="nav-item"><a href="deconnexion.php" class="nav-link">Se déconnecter></a></li>
+        <?php endif ?>
+        </ul>
   </header>
 </html>

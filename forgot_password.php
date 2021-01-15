@@ -5,7 +5,7 @@ require_once 'authController.php';
   <body>
      <?php require 'header.php'; ?>
       <div id="container">
-            <form action="forgot_password.php" method="POST">
+            <form action="forgot.php" method="POST">
                 <h4 class="title-element">Mot de passe oublié ?</h4> 
                 <p>Pas de panique!</br>
                 Veuillez complétez le champs ci-dessous, nous vous enverrons toutes les informations par mail.

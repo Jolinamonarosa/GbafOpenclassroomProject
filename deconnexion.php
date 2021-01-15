@@ -1,6 +1,5 @@
 <?php
 session_start();
-session_destroy();
-header('location: ../connexion.php');
-exit;
+unset($_SESSION['connecte']);
+header('location: connexion.php');
 ?>

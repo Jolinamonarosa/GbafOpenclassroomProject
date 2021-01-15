@@ -1,28 +1,32 @@
 <?php
 require_once 'database.php';
-$bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
-$erreur = null;
-$req = $bdd->prepare('SELECT id, mdp FROM membres WHERE pseudo = :pseudo');
-$req->execute(array(
-  'pseudo' => $pseudo));
-$resultat = $req->fetch(PDO::FETCH_ASSOC);
-$isPasswordCorrect = password_verify($_POST['mdp'], $resultat['mdp']);
-if(!$resultat) {
-  $erreur = "Identifiants incorrects";
-}else {
-    if($isPasswordCorrect) {
-      session_start();
-      $_SESSION['connecte'] = 1;
-      header('Location: accueil.php');
-    exit();
-    }
-    require_once 'auth.php';
-        if(est_connecte()) {
-          header('Location: accueil.php');
-        exit();
-        }else {
-          $erreur = "Identifiants incorrects";
-        }
+if(isset($_POST['pseudo']) & isset($_POST['mdp'])) {
+  $bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
+  $erreur = null;
+  $pseudo = htmlspecialchars($_POST['pseudo']); 
+  $password = htmlspecialchars($_POST['mdp']);
+  $req = $bdd->prepare('SELECT id, mdp FROM membres WHERE pseudo = :pseudo');
+  $req->execute(array(
+    'pseudo' => $pseudo));
+  $resultat = $req->fetch(PDO::FETCH_ASSOC);
+  $isPasswordCorrect = password_verify($_POST['mdp'], $resultat['mdp']);
+  if(!$resultat) {
+    $erreur = "Identifiants incorrects";
+  }else {
+      if($isPasswordCorrect) {
+        session_start();
+        $_SESSION['connecte'] = 1;
+        header('Location: accueil.php');
+      exit();
+      }
+      require_once 'auth.php';
+          if(est_connecte()) {
+            header('Location: accueil.php');
+          exit();
+          }else {
+            $erreur = "Identifiants incorrects";
+          }
+  }
 }
 ?>
 <body>

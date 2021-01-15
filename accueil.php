@@ -14,7 +14,6 @@ include_once 'database.php';
       <?php include 'header_user.php' ?>
 </header>
     <div id="content">
-        <a href='accueil.php?deconnexion=true'><span>Déconnexion</span></a>
     </div>
         <div class="description_accueil">
             <h1>Le Groupement Banque Assurance Français</h1>
@@ -68,5 +67,4 @@ include_once 'database.php';
             </div>
 </article>
         </div>
-</body>
-</html>
+<?php require_once 'footer.php'; ?>
