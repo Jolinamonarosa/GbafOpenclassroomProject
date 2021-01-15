@@ -1,27 +1,48 @@
-  <body>
+<?php
+require_once 'database.php';
+$bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
+$erreur = null;
+$req = $bdd->prepare('SELECT id, mdp FROM membres WHERE pseudo = :pseudo');
+$req->execute(array(
+  'pseudo' => $pseudo));
+$resultat = $req->fetch(PDO::FETCH_ASSOC);
+$isPasswordCorrect = password_verify($_POST['mdp'], $resultat['mdp']);
+if(!$resultat) {
+  $erreur = "Identifiants incorrects";
+}else {
+    if($isPasswordCorrect) {
+      session_start();
+      $_SESSION['connecte'] = 1;
+      header('Location: accueil.php');
+    exit();
+    }
+    require_once 'auth.php';
+        if(est_connecte()) {
+          header('Location: accueil.php');
+        exit();
+        }else {
+          $erreur = "Identifiants incorrects";
+        }
+}
+?>
+<body>
       <?php include 'header.php' ?>
     <main>
         <div id="container">
-            <form action="verif_connexion.php" method="POST">
-                
+    <?php if ($erreur): ?>
+    <div class="alert alert-danger">
+      <?= $erreur ?>
+    </div>
+    <?php endif ?>
+            <form action="" method="POST">
                 <label><b>Nom d'utilisateur :</b></label>
-                <input type="text" placeholder="Entrer votre nom d'utilisateur" name="username" required>
-
+                <input type="text" placeholder="Entrer votre nom d'utilisateur" name="pseudo" required>
                 <label><b>Mot de passe :</b></label>
-                <input type="password" placeholder="Entrer votre mot de passe" name="password" required>
+                <input type="password" placeholder="Entrer votre mot de passe" name="mdp" required>
                 <a href="forgot_password.php">Mot de passe oublié?</a>
                 <input type="submit" id='submit' value='CONNEXION' >
             <a href="inscription.php">Pas encore inscrit? Inscrivez-vous</a>
             </form>
-
-            <?php
-            if(isset($_GET['newpwd'])) {
-              if($_GET['newpwd'] == "passwordupdated") {
-                echo '<p class="signupsuccess">Votre mot de passe a été réinitialisé !</p>';
-              }
-            }
-            ?>
-
-        </div>
+      </div>
     </main>
-    <?php include 'footer.php' ?>
+  <?php include 'footer.php'; ?>
