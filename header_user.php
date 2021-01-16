@@ -14,21 +14,19 @@ forcer_utilisateur_connecte();
     <div id="logo">
         <a href="accueil.php"><img src="images/logo_gbaf.jpg"></a>
     </div>
-        <ul class="navbar-nav mr auto">
-            <? nav_menu('nav-link') ?>
-        </ul>
         <ul class="navbar-nav">
-        <div id="content">
-            <?php
-              if($_SESSION['pseudo'] !== "") {
-                $user = $_SESSION['pseudo'];
-                echo "Bonjour $user, vous êtes connecté";
-                }
-            ?>
+        <div id="success">
+            <?php if(bonjour_user()): ?>!
+            <?php endif ?>
           </div>
         <?php if(est_connecte()): ?>
-            <li class="nav-item"><a href="deconnexion.php" class="nav-link">Se déconnecter></a></li>
+          <div id="deco">
+            <li><a href="deconnexion.php" class="nav-link">Déconnexion</a></li>
         <?php endif ?>
+        </div>
+        <div id="profil">
+        <li><a href="profil.php">Mon profil</a></li>
+        </div>
         </ul>
   </header>
 </html>

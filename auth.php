@@ -12,3 +12,9 @@ function forcer_utilisateur_connecte (): void {
         exit();
 }
 }
+
+function bonjour_user() {
+    if(isset($_SESSION['id']) && isset($_SESSION['pseudo'])) {
+        echo 'Bonjour' . $_SESSION['pseudo'];
+    }
+}

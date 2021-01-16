@@ -1,6 +1,6 @@
 <?php
 require_once 'database.php';
-if(isset($_POST['pseudo']) & isset($_POST['mdp'])) {
+if(isset($_POST['pseudo']) && isset($_POST['mdp'])) {
   $bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
   $erreur = null;
   $pseudo = htmlspecialchars($_POST['pseudo']); 
@@ -23,21 +23,19 @@ if(isset($_POST['pseudo']) & isset($_POST['mdp'])) {
           if(est_connecte()) {
             header('Location: accueil.php');
           exit();
-          }else {
-            $erreur = "Identifiants incorrects";
-          }
+            }else {
+              $erreur = "Identifiants incorrects";
+            }
+        }
   }
-}
 ?>
 <body>
       <?php include 'header.php' ?>
     <main>
-        <div id="container">
-    <?php if ($erreur): ?>
+        <div id="container_connexion">
     <div class="alert alert-danger">
       <?= $erreur ?>
     </div>
-    <?php endif ?>
             <form action="" method="POST">
                 <label><b>Nom d'utilisateur :</b></label>
                 <input type="text" placeholder="Entrer votre nom d'utilisateur" name="pseudo" required>
@@ -47,6 +45,5 @@ if(isset($_POST['pseudo']) & isset($_POST['mdp'])) {
                 <input type="submit" id='submit' value='CONNEXION' >
             <a href="inscription.php">Pas encore inscrit? Inscrivez-vous</a>
             </form>
-      </div>
     </main>
   <?php include 'footer.php'; ?>

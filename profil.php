@@ -1,38 +1,35 @@
 <?php
-include_once 'database.php'
+require_once 'database.php'
 ?>
-  <?php require 'header.php' ?>
+  <body>
+  <?php require 'header_user.php' ?>
     <div id="container">
-    <form action="verif_inscription.php" method="POST">
-      <h1>Inscription</h1>
+    <form action="v.php" method="POST">
+      <h1>Mon profil</h1>
       <b>Civilité :</b><br/>
         <input type="radio" name="civi2" value="Mme" /> Madame
         <input type="radio" name="civi2" value="Mr" checked="checked" /> Monsieur
     </br></br>
       <div class="champs">
         <label for="pseudo"><b>Pseudo :</b><span class="ast">*</span></label>
-        <input type="text" placeholder="Entrer votre pseudo" id="pseudo" name="pseudo" required>
+        <input type="text" id="pseudo" name="pseudo" required>
       </div>
       <div class="champs">
         <label for="nom"><b>Nom :</b><span class="ast">*</span></label>
-        <input type="text" placeholder="Entrer votre nom" id="nom" name="nom" required>
+        <input type="text" id="nom" name="nom" required>
       </div>
       <div class="champs">
         <label for="prenom"><b>Prénom :</b><span class="ast">*</span></label>
-        <input type="text" placeholder="Entrer votre prénom" id="prenom" name="prenom" required>
+        <input type="text" id="prenom" name="prenom" required>
       </div>
       <div class="champs">
         <label for="mail"><b>Email :</b><span class="ast">*</span></br></label>
-        <input type="email"  style="width: 452px; height: 35px;" placeholder="Entrer votre email" id="mail" name="mail" required>
+        <input type="email"  style="width: 547px; height: 35px;" id="mail" name="mail" required>
       </div>
   </br>
       <div class="champs">
         <label for="mdp"><b>Mot de passe :</b><span class="ast">*</span></label>
-        <input type="password" placeholder="Entrer votre mot de passe" id="mdp" name="mdp" required>
-      </div>
-      <div class="champs">
-        <label for="mdp2"><b>Confirmation du mot de passe :</b><span class="ast">*</span></label>
-        <input type="password" placeholder="Confirmer votre mot de passe" id="mdp2" name="mdp2" required>
+        <input type="password" id="mdp" name="mdp" required>
       </div>
       <div class="champs">
       <div class="form-input form-group">
@@ -50,11 +47,11 @@ include_once 'database.php'
 </br>
     <div class="champs">
     <label><b>Réponse à la question secrète :</b><span class="ast">*</span></br></label>
-    <input type="reponse" style="width: 452px; height: 35px;" placeholder="Votre réponse" name="reponse" />
+    <input type="reponse" style="width: 547px; height: 35px;" name="reponse" />
     <input type="submit" name="forminscription" value="je m'inscris" />
     </div>
-    <p>Tout les champs avec un * sont obligatoire !<p>
     </form>
 </div>
 <br>
 <?php include 'footer.php' ?>
+  </body>
