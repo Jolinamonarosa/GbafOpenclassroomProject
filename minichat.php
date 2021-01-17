@@ -1,6 +1,5 @@
 <?php
-include_once 'database.php';
-include_once 'header.php';
+require_once 'database.php';
 require "vote.php";
 $vote = false;
 if(isset($_SESSION['user_id'])) {
@@ -10,19 +9,27 @@ if(isset($_SESSION['user_id'])) {
     var_dump($vote);
 }
 ?>
-<body>
-    <div class="vote_bar">
-        <div class="vote_progress" style="width:<?= ($post->like_count + $post->dislike_count) == 0 ? 100 : round(100 * ($post->like_count / ($post->like_count + $post->dislike_count))); ?>%;"></div>
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>Header GBAF</title>
+    <link rel="stylesheet" href="style.css" media="screen"/>
+    <link rel="icon" href="images/logo_gbaf.jpg" />
+    <script src="https://kit.fontawesome.com/a5f9819284.js" crossorigin="anonymous"></script>
+  </head>
+  
+<div class="vote_bar">
+    <div class="vote_progress" style="width:<?= ($post->like_count + $post->dislike_count) == 0 ? 100 : round(100 * ($post->like_count / ($post->like_count + $post->dislike_count))); ?>%;"></div>
     </div>
-    <div class="vote_btns">
-        <form action="like.php?ref=articles&ref_id=9&vote=1" method="POST">
-            <button type="submit" class="vote_btn vote_like"><i class="far fa-thumbs-up"></i><?= $post->like_count?></button>
-        </form>
-        <form action="like.php?ref=articles&ref_id=9&vote=1" method="POST">
-            <button type="submit" class="vote_btn vote_dislike"><i class="far fa-thumbs-down"></i><?= $post->dislike_count?></button>
-        </form>
-    </div>
-</div>
+        <div class="vote_btns">
+            <form action="like.php?ref=articles&ref_id=9&vote=1" method="POST">
+                <button type="submit" class="vote_btn vote_like"><i class="far fa-thumbs-up"></i><?= $post->like_count?></button>
+            </form>
+            <form action="like.php?ref=articles&ref_id=9&vote=1" method="POST">
+                <button type="submit" class="vote_btn vote_dislike"><i class="far fa-thumbs-down"></i><?= $post->dislike_count?></button>
+            </form>
+        </div>
         <form action="minichat_post.php" method="post">
         <p>
         <label for="id_pseudo">Pseudo</label> : </br><input type="text" style="width: 500px; height: 30px" name="id_pseudo" id="id_pseudo" /><br />
@@ -46,6 +53,5 @@ if(isset($_SESSION['user_id'])) {
         ?>
 </ul>
         </div>
-      </div>
-</body>
-      <?php include 'footer.php'; ?>
+</div>
+<?php require 'footer.php'; ?>

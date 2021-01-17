@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once 'database.php';
+require_once 'database.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -10,7 +10,7 @@ include_once 'database.php';
     <link rel="stylesheet" href="style.css" media="screen"/>
   </head>
   <header>
-      <?php include 'header.php'; ?>
+      <?php require 'header_user.php'; ?>
   </header>
   <body>
       <div class="description">
@@ -28,6 +28,6 @@ include_once 'database.php';
         </br>Vous n'avez pas de diplômes? Ce n'est pas un problème pour nous !
         </br>Nos financements s'adressent à tous.</p>
       </div>
-      <?php include 'minichat.php'; ?>
+      <?php require 'minichat.php'; ?>
 </body>
     </html>

@@ -15,14 +15,14 @@ include_once 'database.php';
 </header>
     <div id="content">
     </div>
-        <div class="description_accueil">
+        <div class="description">
             <h1>Le Groupement Banque Assurance Français</h1>
-            <p>Fédération représentant les 6 grands groupes français : BNP Paribas, BPCE, Crédit Agricole, Crédit Mutuel-CIC, Société Générale, La Banque Postale.
+            <p>Fédération représentant les 6 grands groupes français :</br> BNP Paribas, BPCE, Crédit Agricole, Crédit Mutuel-CIC, Société Générale, La Banque Postale.
             <br> Représentant de la profession bancaire et des assureurs sur tous les axes de la réglementation financière française.</p>
         </div>
         
         <div class="listing">
-            <div class="acteurs">
+            <div class="acteur">
                 <img src="images/formation_co.jpg" alt="Formation & Co">
                 <div class="content">
                     <h3>Formation & Co</h3>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once 'database.php';
+require_once 'database.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -10,7 +10,7 @@ include_once 'database.php';
     <link rel="stylesheet" href="style.css" media="screen"/>
   </head>
 
-      <?php include 'header.php' ?>
+  <?php require 'header_user.php'; ?>
       <div class="description">
       <img src="images/dsa.jpg" alt="DSA France">
         <p>Dsa France accélère la croissance du territoire et s'engage avec les collectivités territoriales.
@@ -20,6 +20,6 @@ include_once 'database.php';
         </br>financement adaptées à chaque étape de la vie des entreprises.</p>
         </div>
         </div>
-        <?php include 'minichat.php' ?>
+        <?php require 'minichat.php'; ?>
 </body>
 </html>

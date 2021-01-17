@@ -1,15 +1,9 @@
-<?php
-require_once 'database.php'
-?>
-  <body>
-  <?php require 'header_user.php' ?>
-    <div id="container">
-    <form action="v.php" method="POST">
+<?php require_once 'database.php'; ?>
+  <?php require 'header_user.php'; ?>
+    <div id="container_profil">
+    <form action="" method="POST">
+    </br></br></br></br></br>
       <h1>Mon profil</h1>
-      <b>Civilité :</b><br/>
-        <input type="radio" name="civi2" value="Mme" /> Madame
-        <input type="radio" name="civi2" value="Mr" checked="checked" /> Monsieur
-    </br></br>
       <div class="champs">
         <label for="pseudo"><b>Pseudo :</b><span class="ast">*</span></label>
         <input type="text" id="pseudo" name="pseudo" required>
@@ -24,7 +18,7 @@ require_once 'database.php'
       </div>
       <div class="champs">
         <label for="mail"><b>Email :</b><span class="ast">*</span></br></label>
-        <input type="email"  style="width: 547px; height: 35px;" id="mail" name="mail" required>
+        <input type="email"  style="width: 460px; height: 43px;" id="mail" name="mail" required>
       </div>
   </br>
       <div class="champs">
@@ -47,11 +41,10 @@ require_once 'database.php'
 </br>
     <div class="champs">
     <label><b>Réponse à la question secrète :</b><span class="ast">*</span></br></label>
-    <input type="reponse" style="width: 547px; height: 35px;" name="reponse" />
+    <input type="reponse" style="width: 460px; height: 37px;" name="reponse" />
     <input type="submit" name="forminscription" value="je m'inscris" />
     </div>
     </form>
 </div>
 <br>
-<?php include 'footer.php' ?>
-  </body>
+<?php require 'footer.php'; ?>

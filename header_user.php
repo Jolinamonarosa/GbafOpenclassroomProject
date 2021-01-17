@@ -12,21 +12,23 @@ forcer_utilisateur_connecte();
   </head>
  <header>
     <div id="logo">
+      <div id="header_user">
         <a href="accueil.php"><img src="images/logo_gbaf.jpg"></a>
+      </div>
     </div>
-        <ul class="navbar-nav">
-        <div id="success">
+    <div id="header_user">
+          <div id="success">
             <?php if(bonjour_user()): ?>!
             <?php endif ?>
           </div>
-        <?php if(est_connecte()): ?>
-          <div id="deco">
-            <li><a href="deconnexion.php" class="nav-link">Déconnexion</a></li>
-        <?php endif ?>
-        </div>
-        <div id="profil">
-        <li><a href="profil.php">Mon profil</a></li>
-        </div>
-        </ul>
+            <?php if(est_connecte()): ?>
+          <div id="header_user">
+            <a href="deconnexion.php" class="nav-link"><img src="https://img.icons8.com/wired/64/000000/logout-rounded-up.png"/></a>
+            <?php endif ?>
+          </div>
+          <div id="header_user">
+            <a href="profil.php"><img src="https://img.icons8.com/wired/64/000000/circled-user.png"/></a>
+          </div>
+      </div>
   </header>
 </html>

@@ -1,6 +1,6 @@
 <?php
-include_once 'database.php';
-include 'minichat.php';
+require_once 'database.php';
+require 'minichat.php';
 
 if(isset($_POST['id_pseudo'], $_POST['contenu']) && !empty($_POST['id_pseudo']) && !empty($_POST['contenu'])) {
     $pseudo = htmlspecialchars(addslashes($_POST['id_pseudo']));

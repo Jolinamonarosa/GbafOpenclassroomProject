@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once 'database.php';
+require_once 'database.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -10,7 +10,7 @@ include_once 'database.php';
     <link rel="stylesheet" href="style.css" media="screen"/>
   </head>
   <header>
-      <?php include 'header.php' ?>
+      <?php require 'header_user.php'; ?>
 </header>
       <div class="description">
       <img src="images/cde.jpg" alt="CDE">
@@ -18,6 +18,6 @@ include_once 'database.php';
         <br>Son président est élu pour 3 ans par ses pairs, chefs d'entreprises et présidents des CDE.</p>
         </div>
         </div>
-        <?php include 'minichat.php' ?>
+        <?php require 'minichat.php'; ?>
 </body>
 </html>

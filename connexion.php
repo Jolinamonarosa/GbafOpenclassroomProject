@@ -29,14 +29,11 @@ if(isset($_POST['pseudo']) && isset($_POST['mdp'])) {
         }
   }
 ?>
-<body>
-      <?php include 'header.php' ?>
-    <main>
+      <?php require 'header.php'; ?>
         <div id="container_connexion">
-    <div class="alert alert-danger">
-      <?= $erreur ?>
-    </div>
+            <?= $erreur ?>
             <form action="" method="POST">
+            </br></br></br></br></br></br></br></br></br></br></br></br>
                 <label><b>Nom d'utilisateur :</b></label>
                 <input type="text" placeholder="Entrer votre nom d'utilisateur" name="pseudo" required>
                 <label><b>Mot de passe :</b></label>
@@ -45,5 +42,5 @@ if(isset($_POST['pseudo']) && isset($_POST['mdp'])) {
                 <input type="submit" id='submit' value='CONNEXION' >
             <a href="inscription.php">Pas encore inscrit? Inscrivez-vous</a>
             </form>
-    </main>
-  <?php include 'footer.php'; ?>
+      </div> 
+  <?php require 'footer.php'; ?>

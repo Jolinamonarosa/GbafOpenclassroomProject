@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once 'database.php';
+require_once 'database.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -9,9 +9,7 @@ include_once 'database.php';
     <title>Acteur Protectpeople</title>
     <link rel="stylesheet" href="style.css" media="screen"/>
   </head>
-<header>
-      <?php include 'header.php'; ?>
-</header>
+<?php require 'header_user.php'; ?>
       <div class="description">
       <img src="images/protectpeople.jpg" alt="Protect People">
         <p><strong>Protectpeople finance la solidarité nationale.
@@ -28,6 +26,6 @@ include_once 'database.php';
             <li>économique: nous apportons une contribution aux activités économiques.</li>
         </ul></p>
         </div>
-  <?php include 'minichat.php'; ?>
+  <?php require 'minichat.php'; ?>
 </body>
 </html>

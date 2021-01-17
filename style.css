@@ -1,52 +1,65 @@
 html {
     font-family: 'Montserrat', sans-serif;
     width: 100%;
-    height: 100%;
-    margin-top: 6%;
-    background-color: #fdfaf9;
+    background-color: white;
 }
 
 header {
 	position: fixed;
-	top: 0;
+	margin-top: 0%;
 	left: 0;
 	width: 100%;
-    padding: 10px 0;
-	background-color: #da2929;
-	box-shadow: 0 0 10px rgba(black,0.3);
+	background-color: white;
+    box-shadow: 0 0 5px rgba(black,0.3);
 	z-index: 9998;
 }
 
-.logo {
-	position: relative;
-    display: block;
-    border-radius: 20px;
+#header_user {
+    float: right;
+    margin-top: 0%;
 }
 
-#container {
+#logo {
+    float: left;
+}
+
+#form {
+    width:100%;
+    padding: 50px;
+    border: 1px solid #f1f1f1;
+    background: #fff;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+#container_inscription {
     width: 460px;
-    height: 0;
-    margin: 0;
     margin-left: 39%;
 }
 
 #container_connexion {
     width: 460px;
     margin-left: 38%;
-    margin-top: 10%;
 }
 
 #container_contact {
     width: 460px;
     margin-left: 38%;
-    margin-top: 10%;
+}
+
+#container_profil {
+    width: 460px;
+    margin-left: 37%;
+}
+
+#container_forgot_password {
+    width: 460px;
+    margin-left: 37%;
 }
 
 input[type=text], input[type=email], input[type=password] {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
-    display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
@@ -70,10 +83,11 @@ input[type=submit]:hover {
 footer {
     position: fixed;
     display: flex;
+    left: 0;
     bottom: 0%;
     justify-content: center;
     align-items: center;
-    height: 5.5em;
+    height: 4em;
     width: 100%;
     background-color:#da2929;
 }
@@ -96,6 +110,7 @@ footer {
 #acteur {
     display: flex;
     background-color: #EEE;
+    text-align: center;
     padding: 10px;
     border-radius: 3px;
     margin: 10px;
@@ -230,12 +245,4 @@ textarea {
 
 #nav-item {
     text-align : right;
-}
-
-#navbar-nav #deco {
-    float:left;
-    width:60%;
-}
-#navbar-nav #profil {
-    margin-left:60%   
 }
