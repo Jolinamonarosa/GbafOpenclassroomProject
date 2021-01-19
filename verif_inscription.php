@@ -11,9 +11,11 @@ if(isset($_POST['forminscription'])){
     $mdp2 = htmlspecialchars($_POST['mdp2']);
     date_default_timezone_set ('Europe/Paris');
     $date = date('d/m/Y à H:i:s');
+    $question = ($_POST['question']);
+    $reponse = htmlspecialchars($_POST['reponse']);
 }
 
-if((!empty($pseudo))&&(!empty($nom))&&(!empty($prenom))&&(!empty($mail))&&(!empty($mdp))&&(!empty($mdp2))){
+if((!empty($pseudo))&&(!empty($nom))&&(!empty($prenom))&&(!empty($mail))&&(!empty($mdp))&&(!empty($mdp2))&&(!empty($question))&&(!empty($reponse))){
         if(filter_var($mail, FILTER_VALIDATE_EMAIL)){
                 if($mail == 0){
                     $pass_hache = password_hash($_POST['mdp'], PASSWORD_DEFAULT);
@@ -21,14 +23,16 @@ if((!empty($pseudo))&&(!empty($nom))&&(!empty($prenom))&&(!empty($mail))&&(!empt
                         $bdd = getPDO();
                         $rowEmail = count($bdd, 'mail', $mail);
                         if($rowEmail == 0){
-                            $insertmbr = $bdd->prepare('INSERT INTO membres(pseudo, nom, prenom, mail, mdp, date_inscription) VALUES(:pseudo, :nom, :prenom, :mail, :mdp, CURDATE())');
+                            $insertmbr = $bdd->prepare('INSERT INTO membres(pseudo, nom, prenom, mail, mdp, date_inscription, question, reponse) VALUES(:pseudo, :nom, :prenom, :mail, :mdp, CURDATE(), :question, :reponse)');
                             $insertmbr->execute(array(
                                 'pseudo'=>$pseudo,
                                 'nom'=>$nom,
                                 'prenom'=>$prenom,
                                 'mail'=>$mail,
-                                'mdp'=>$pass_hache));
-                            $successMessage ="Votre compte a bien été crée !";
+                                'mdp'=>$pass_hache,
+                                'question' =>$question,
+                                'reponse' =>$reponse));
+                            $successMessage ="Votre compte a bien été crée !<a href=\"connexion.php\">Me connecter</a>";
                             header('Location: connexion.php?id=');
                         }else{
                             $errorMessage="L'email est déjà dans la base de données !";

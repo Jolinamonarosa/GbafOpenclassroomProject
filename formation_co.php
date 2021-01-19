@@ -18,12 +18,10 @@ require_once 'database.php';
         <p>Formation & Co est une association française présente sur tout le territoire.
         <br>Nous proposons à des personnes issues de tout milieu de devenir entrepreneur grâce à un crédit et un accompagnement professionnel et personnalisé.
         </br>Notre proposition :
-        <ul>
-            <li>un financement jusqu'à 30 000€;</li>
-            <li>un suivi personnalisé et gratuit;</li>
-            <li>une lutte acharnée contre les freins sociétaux et les stéréotypes.</li>
-        </ul>
-        </br>Le financement est possible, peu importe le métier: coiffeur, banquier, éleveur de
+            <p>Un financement jusqu'à 30 000€;</br>
+            Un suivi personnalisé et gratuit;</br>
+            Une lutte acharnée contre les freins sociétaux et les stéréotypes.</p></br>
+            Le financement est possible, peu importe le métier: coiffeur, banquier, éleveur de
         </br>chèvres... Nous collaborons avec des personnes talentueuses et motivées.
         </br>Vous n'avez pas de diplômes? Ce n'est pas un problème pour nous !
         </br>Nos financements s'adressent à tous.</p>

@@ -20,11 +20,10 @@ require_once 'database.php';
         </br>Protectpeople est ouvert à tous, sans considération d'âge ou d'état de santé.
         </br>Nous garantissons un accès aux soins et une retraite.
         </br>Chaque année, nous collectons et répartissons 300 milliards d'euros.
-</br></br>Notre mission est double :
-        <ul>
-            <li>sociale: nous garantissons la fiabilité des données sociales;</li>
-            <li>économique: nous apportons une contribution aux activités économiques.</li>
-        </ul></p>
+</br></br>Notre mission est double :</br>
+            sociale: nous garantissons la fiabilité des données sociales;</br>
+            économique: nous apportons une contribution aux activités économiques.
+        </p>
         </div>
   <?php require 'minichat.php'; ?>
 </body>

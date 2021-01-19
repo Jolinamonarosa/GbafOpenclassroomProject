@@ -2,12 +2,26 @@
 require_once 'database.php';
 require "vote.php";
 $vote = false;
-if(isset($_SESSION['user_id'])) {
-    $req =$pdo->prepare('SELECT * FROM votes WHERE ref = ? AND ref_id = ? AND user_id = ?');
-    $req->execute(['articles', $_GET['id'], $_SESSION['user_id']]);
-    $vote = $req->fetch();
-    var_dump($vote);
+if(isset($_GET['id']) && $_GET['id'] > 0) {
+  $bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
+	$getid = intval($_GET['id']); 
+	$requser = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
+	$requser->execute(array($getid));
+  $userinfo = $requser->fetch();
 }
+
+  if(isset($_SESSION['id'])) {
+      $requser= $bdd->prepare("SELECT * FROM membres WHERE id = ?");
+      $requser->execute(array($_SESSION['id']));
+      $user = $requser->fetch();
+  }
+
+    if(isset($_SESSION['user_id'])) {
+        $req =$pdo->prepare('SELECT * FROM votes WHERE ref = ? AND ref_id = ? AND user_id = ?');
+        $req->execute(['articles', $_GET['id'], $_SESSION['user_id']]);
+        $vote = $req->fetch();
+        var_dump($vote);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -32,8 +46,8 @@ if(isset($_SESSION['user_id'])) {
         </div>
         <form action="minichat_post.php" method="post">
         <p>
-        <label for="id_pseudo">Pseudo</label> : </br><input type="text" style="width: 500px; height: 30px" name="id_pseudo" id="id_pseudo" /><br />
-        <label for="contenu">Message</label> : </br><textarea name="contenu" type ="text" id="contenu" placeholder="Votre commentaire..."></textarea><br>
+        <label for="id_pseudo">Pseudo</label> : </br><input type="text" style="width: 500px; height: 30px" name="id_pseudo" id="id_pseudo" value="<?php echo $userinfo['pseudo']; ?>" /><br />
+        <label for="contenu">Message</label> : </br><textarea name="contenu" type ="text" id="contenu" style="width: 452px; height: 35px;" placeholder="Votre commentaire..."></textarea><br>
         <input type="submit" value="PUBLIER" id="submit_commentaire" name="submit_commentaire">
       	</p>
         </form>
@@ -44,9 +58,13 @@ if(isset($_SESSION['user_id'])) {
          $req = $bdd->query($sql);
          while($row =$req->fetch()){
              ?>
-                <li><?php echo $row['id_pseudo'] ?></li>
-                <li><?php echo $row['contenu']?>
-                <li><?php echo $row['date'] ?></li>
+          <div id="section_commentaire">
+          <section>
+              <li><b><?php echo $row['id_pseudo'] ?></b>
+              <?php echo $row['date'] ?></br>
+              <?php echo $row['contenu'] ?></li>
+         </section>
+         </div>
              <?php
          }
 
@@ -54,4 +72,3 @@ if(isset($_SESSION['user_id'])) {
 </ul>
         </div>
 </div>
-<?php require 'footer.php'; ?>

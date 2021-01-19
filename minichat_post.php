@@ -14,7 +14,5 @@ if(isset($_POST['id_pseudo'], $_POST['contenu']) && !empty($_POST['id_pseudo']) 
     $req->execute(array(
         'id_pseudo'=>$pseudo,
         'contenu'=>$contenu));
-
-    header('Location:minichat.php');
+    header('Location:minichat.php?id=13');
 }
-?>

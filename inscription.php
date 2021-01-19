@@ -2,7 +2,7 @@
   <?php require 'header.php'; ?>
     <div id="container_inscription">
       <form action="verif_inscription.php" method="POST">
-      </br></br></br>
+      </br></br></br></br>
           <h1>Inscription</h1>
             <b>Civilité :</b><br/>
             <input type="radio" name="civi2" value="Mme" /> Madame
