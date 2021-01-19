@@ -46,7 +46,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0) {
         </div>
         <form action="minichat_post.php" method="post">
         <p>
-        <label for="id_pseudo">Pseudo</label> : </br><input type="text" style="width: 500px; height: 30px" name="id_pseudo" id="id_pseudo" value="<?php echo $userinfo['pseudo']; ?>" /><br />
+        <label for="id_pseudo">Pseudo</label> : </br><input type="text" style="width: 400px; height: 30px" name="id_pseudo" id="id_pseudo" value="<?php echo $userinfo['pseudo']; ?>" /><br />
         <label for="contenu">Message</label> : </br><textarea name="contenu" type ="text" id="contenu" style="width: 452px; height: 35px;" placeholder="Votre commentaire..."></textarea><br>
         <input type="submit" value="PUBLIER" id="submit_commentaire" name="submit_commentaire">
       	</p>

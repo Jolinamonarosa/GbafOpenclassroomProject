@@ -32,8 +32,8 @@ if((!empty($pseudo))&&(!empty($nom))&&(!empty($prenom))&&(!empty($mail))&&(!empt
                                 'mdp'=>$pass_hache,
                                 'question' =>$question,
                                 'reponse' =>$reponse));
-                            $successMessage ="Votre compte a bien été crée !<a href=\"connexion.php\">Me connecter</a>";
-                            header('Location: connexion.php?id=');
+                                
+                            header('Location: connexion.php');
                         }else{
                             $errorMessage="L'email est déjà dans la base de données !";
                         }

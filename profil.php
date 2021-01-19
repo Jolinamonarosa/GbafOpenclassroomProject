@@ -1,6 +1,5 @@
 <?php
 require_once 'database.php';
-require_once 'edition_profil.php';
 require_once 'header_user.php';
 
 if(isset($_GET['id']) && $_GET['id'] > 0) {
@@ -43,10 +42,38 @@ if(isset($_GET['id']) && $_GET['id'] > 0) {
             }
     }
 }
+if(isset($_FILES['avatar']) AND !empty($_FILES['avatar']['name'])) {
+  $tailleMax= 2097152; //2megaoctet
+  $extensionsValides = array('jpg', 'jpeg', 'gif', 'png');
+  if($_FILES['avatar']['size'] <= $tailleMax) {
+    $extensionUpload = strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1)); //mis en minuscule
+  //renvoyer l'extension du fichier avec le point, ignorte le premier caractère de la chaine, prend l'extension, tout ce qui vient après le point
+    if(in_array($extensionUpload, $extensionsValides)) {
+      $chemin = "membre/avatars/" .$_SESSION['id'].".".$extensionUpload;
+      $resultat = move_uploaded_file($_FILES['avatar']['tmp_name'], $chemin);
+      if($resultat) {
+        $updateAvatar = $bdd->prepare('UPDATE membres SET avatar = :avatar WHERE id = :id');
+        $updateAvatar->execute(array(
+          'avatar' => $_SESSION['id'].".".$extensionUpload,
+          'id' => $_SESSION['id']
+        ));
+        header('Location: profil.php');
+      }else {
+        $erreur = "Erreur durant l'importation de votre photo de profil";
+      }
+    }else {
+      $erreur = "Votre photo de profil doit être au format jpg, jpeg, gif ou png";
+    }
+}else {
+    $erreur = "Votre photo de profil ne doit pas dépasser 2Mo";
+  }
+}
+
+
 ?>
     <div id="container_profil">
-    <form action="" method="POST">
-    </br></br></br></br></br></br>
+    <form action="" method="POST" enctype="multipart/form-data">
+    </br></br></br></br></br>
       <h1>Mon profil</h1>
       <div class="champs">
         <label for="pseudo"><b>Pseudo :</b><span class="ast">*</span></label>
@@ -85,6 +112,9 @@ if(isset($_GET['id']) && $_GET['id'] > 0) {
     <div class="champs">
     <label><b>Réponse à la question secrète :</b><span class="ast">*</span></label>
     <input type="reponse" style="width: 460px; height: 37px;" name="reponse"  value="<?php echo $userinfo['reponse']; ?>"/>
+    </br></br>
+    <label><b>Photo de profil :</b></label></br>
+    <input type="file" name="avatar" />
     <input type="submit" name="editionprofil" value="Mettre à jour mon profil"/>
     </div>
     </form>
