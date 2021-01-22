@@ -18,7 +18,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0) {
 
     if(isset($_SESSION['user_id'])) {
         $req =$pdo->prepare('SELECT * FROM votes WHERE ref = ? AND ref_id = ? AND user_id = ?');
-        $req->execute(['articles', $_GET['id'], $_SESSION['user_id']]);
+        $req->execute(['commentaires', $_GET['id'], $_SESSION['user_id']]);
         $vote = $req->fetch();
         var_dump($vote);
     }
@@ -54,7 +54,7 @@ if(isset($_GET['id']) && $_GET['id'] > 0) {
         <ul>
         <?php
          $bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
-         $sql = ('SELECT id_pseudo, contenu, date FROM articles');
+         $sql = ('SELECT id_pseudo, contenu, date FROM commentaires');
          $req = $bdd->query($sql);
          while($row =$req->fetch()){
              ?>

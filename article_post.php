@@ -2,38 +2,42 @@
 require_once 'database.php';
 require_once 'header_user.php';
 
-if(isset($_POST['titre'], $_POST['paragraphe']) && !empty($_POST['titre']) && !empty($_POST['paragraphe'])) {
+if(isset($_POST['logo'], $_POST['titre'], $_POST['texte_mini'], $_POST['texte']) && !empty($_POST['logo']) && !empty($_POST['titre']) && !empty($_POST['texte_mini']) && !empty($_POST['texte'])) {
+    $logo = ($_POST['logo']);
     $titre = htmlspecialchars($_POST['titre']);
-    $paragraphe = htmlspecialchars($_POST['paragraphe']);
+    $minitexte = htmlspecialchars($_POST['texte-mini']);
+    $texte = htmlspecialchars($_POST['texte']);
     $datenow = date("Y-m-d H:i:s");
 
     $bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
-    $req = $bdd->prepare("INSERT INTO blog (titre, paragraphe, date_publication) VALUES (:titre, :paragraphe, :date_publication)");
+    $req = $bdd->prepare("INSERT INTO partenaire (logo, titre, texte_mini, texte, date_publication) VALUES (:logo, :titre, :paragraphe, texte_mini, :texte, :date_publication)");
     $req->execute(array(
+        'logo'=>$logo,
         'titre'=>$titre,
-        'paragraphe'=>$paragraphe,
+        'texte_mini'=>$minitexte,
+        'texte'=>$texte,
         'date_publication'=>$datenow));
 
-    Header('Location: article_post.php');
+    Header('Location: accueil.php');
 }
 ?>
 <br/><br/><br/><br/><br/><br/><br/><br/>
-    <form method="POST" action="data.php">
+    <form method="POST" action="">
         Titre : <br/>
         <input type="text" name="titre" required /><br/>
         Contenu :<br/>
-        <textarea name="paragraphe" required></textarea><br/>
+        <textarea name="texte_mini" required></textarea><br/>
         <input type="submit" name="submit" value="Publier" />
     </form>
 
     <ol>
         <?php
          $bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
-         $req = $bdd->query("SELECT titre FROM blog ORDER BY date_publication DESC");
+         $req = $bdd->query("SELECT titre FROM partenaire ORDER BY date_publication DESC");
          while($row = $req->fetch())
          {
         ?>
-            <li><a href="blog.php?id=<?php echo $row['id']; ?>"><?php echo $row['titre']; ?></a></li>
+            <li><a href="partenaire.php?id=<?php echo $row['id']; ?>"><?php echo $row['titre']; ?></a></li>
             <?php
          }
     ?>

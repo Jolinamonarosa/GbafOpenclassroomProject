@@ -32,8 +32,8 @@ if((!empty($pseudo))&&(!empty($nom))&&(!empty($prenom))&&(!empty($mail))&&(!empt
                                 'mdp'=>$pass_hache,
                                 'question' =>$question,
                                 'reponse' =>$reponse));
-                                
                             header('Location: connexion.php');
+                            $successMessage="Vous êtes bien inscrits sur GBAF";
                         }else{
                             $errorMessage="L'email est déjà dans la base de données !";
                         }

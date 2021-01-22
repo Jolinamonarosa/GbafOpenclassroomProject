@@ -1,10 +1,10 @@
-html {
+#html{
     font-family: 'Montserrat', sans-serif;
     width: 100%;
     background-color: white;
 }
 
-header {
+#header {
 	position: fixed;
 	margin-top: 0%;
 	left: 0;
@@ -276,4 +276,3 @@ ul li {
     list-style: none;
 }
 
-  

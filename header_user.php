@@ -10,6 +10,7 @@ forcer_utilisateur_connecte();
     <title>Header utilisateur</title>
     <link rel="stylesheet" href="style.css" media="screen"/>
   </head>
+<body>
  <header>
     <div id="logo">
       <div id="header_user">

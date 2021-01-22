@@ -9,13 +9,14 @@ if(isset($_POST['pseudo']) && isset($_POST['mdp'])) {
   $req->execute(array(
     'pseudo' => $pseudo));
   $resultat = $req->fetch(PDO::FETCH_ASSOC);
-  $isPasswordCorrect = password_verify($_POST['mdp'], $resultat['mdp']);
   if(!$resultat) {
-    $erreur = "Identifiants incorrects";
+    $erreur = "Identifiants incorrects !";
   }else {
+    $isPasswordCorrect = password_verify($_POST['mdp'], $resultat['mdp']);
       if($isPasswordCorrect) {
         session_start();
         $_SESSION['connecte'] = 1;
+        $_SESSION['id'] = $resultat['id'];
         header('Location: accueil.php');
       exit();
       }
@@ -24,16 +25,17 @@ if(isset($_POST['pseudo']) && isset($_POST['mdp'])) {
             header('Location: accueil.php');
           exit();
             }else {
-              $erreur = "Identifiants incorrects";
+              $erreur = "Identifiants incorrects !";
             }
         }
   }
 ?>
-      <?php require 'header.php'; ?>
-        <div id="container_connexion">
-            <?= $erreur ?>
+    <?php require 'header.php'; ?>
+      <div id="container_connexion">
             <form action="" method="POST">
             </br></br></br></br></br></br></br></br></br></br></br></br>
+            <?= $erreur ?>
+            </br></br>
                 <label><b>Nom d'utilisateur :</b></label>
                 <input type="text" placeholder="Entrer votre nom d'utilisateur" name="pseudo" required>
                 <label><b>Mot de passe :</b></label>

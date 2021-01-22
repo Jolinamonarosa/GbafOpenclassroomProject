@@ -1,29 +1,23 @@
 <?php
-function sendPasswordResetLink($userEmail, $token) {
-    global $mailer;
+//fonction qui reccupère tous les articles
+function getArticles() {
+    $bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
+    $req = $bdd->prepare('SELECT id, logo, titre, extrait FROM partenaire ORDER BY id DESC');
+    $req->execute();
+    $data = $req->fetchAll(PDO::FETCH_OBJ);
+    return $data;
+    $req->closeCursor();
+}
 
-    $body = '<DOCTYPE html>
-    <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <title>Vérification email</title>
-    </head>
-    <body>
-        <div class="wrapper">
-        <p>Bonjoir!
-        Veuillez cliquer sur le lien suivant pour réinitialiser votre mot de passe.
-        </p>
-        <a href="http://localhost/gbaf/index.php?password-token=' . $token . '">
-        Réinitialiser le mot de passe 
-        </a>
-        </div>
-    </body>
-    </html>';
-
-    $message = (new Swift_Message('Reinitialiser le mot de passe'))
-    ->setFrom(EMAIL)
-    ->setTo($userEmail)
-    ->setBody($body, 'text/html');
-
-    $result = $mailer->send($message);
+//fonction qui reccupère un article
+function getArticle($id) {
+    $bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
+    $req = $bdd->prepare('SELECT * FROM partenaire WHERE id = ?');
+    $req->execute(array($id));
+    if($req->rowCount() == 1) {
+        $data = $req->fetch(PDO::FETCH_OBJ);
+        return $data;
+    }else {
+        header('Location: accueil.php');
+    }
 }
