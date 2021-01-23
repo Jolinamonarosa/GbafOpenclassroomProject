@@ -3,7 +3,6 @@
     width: 100%;
     background-color: white;
 }
-
 #header {
 	position: fixed;
 	margin-top: 0%;
@@ -87,7 +86,7 @@ footer {
     bottom: 0%;
     justify-content: center;
     align-items: center;
-    height: 4em;
+    height: 3em;
     width: 100%;
     background-color:#da2929;
 }
@@ -130,17 +129,6 @@ footer {
 
 .ast {
     color: red;
-}
-
-.description {
-    text-align: center;
-    width: 100%;
-    padding: 100px 100px;
-    border-bottom: 1px solid #AAA;
-    background-size: cover;
-    background-attachment: fixed;
-    box-sizing: border-box;
-    line-height: 1.8em;
 }
 
 #comment {

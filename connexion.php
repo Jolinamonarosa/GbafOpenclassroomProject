@@ -10,7 +10,7 @@ if(isset($_POST['pseudo']) && isset($_POST['mdp'])) {
     'pseudo' => $pseudo));
   $resultat = $req->fetch(PDO::FETCH_ASSOC);
   if(!$resultat) {
-    $erreur = "Identifiants incorrects !";
+    $erreur = "Identifiant ou mot de passe incorrect !";
   }else {
     $isPasswordCorrect = password_verify($_POST['mdp'], $resultat['mdp']);
       if($isPasswordCorrect) {
@@ -25,7 +25,7 @@ if(isset($_POST['pseudo']) && isset($_POST['mdp'])) {
             header('Location: accueil.php');
           exit();
             }else {
-              $erreur = "Identifiants incorrects !";
+              $erreur = "Identifiant ou mot de passe incorrect !";
             }
         }
   }

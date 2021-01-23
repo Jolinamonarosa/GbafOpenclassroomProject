@@ -15,13 +15,6 @@ if(isset($_GET['id']) && $_GET['id'] > 0) {
       $requser->execute(array($_SESSION['id']));
       $user = $requser->fetch();
   }
-
-    if(isset($_SESSION['user_id'])) {
-        $req =$pdo->prepare('SELECT * FROM votes WHERE ref = ? AND ref_id = ? AND user_id = ?');
-        $req->execute(['commentaires', $_GET['id'], $_SESSION['user_id']]);
-        $vote = $req->fetch();
-        var_dump($vote);
-    }
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -32,10 +25,10 @@ if(isset($_GET['id']) && $_GET['id'] > 0) {
     <link rel="icon" href="images/logo_gbaf.jpg" />
     <script src="https://kit.fontawesome.com/a5f9819284.js" crossorigin="anonymous"></script>
   </head>
-  
-<div class="vote_bar">
-    <div class="vote_progress" style="width:<?= ($post->like_count + $post->dislike_count) == 0 ? 100 : round(100 * ($post->like_count / ($post->like_count + $post->dislike_count))); ?>%;"></div>
-    </div>
+
+        <div class="vote_bar">
+          <div class="vote_progress" style="width:<?= ($post->like_count + $post->dislike_count) == 0 ? 100 : round(100 * ($post->like_count / ($post->like_count + $post->dislike_count))); ?>%;"></div>
+          </div>
         <div class="vote_btns">
             <form action="like.php?ref=articles&ref_id=9&vote=1" method="POST">
                 <button type="submit" class="vote_btn vote_like"><i class="far fa-thumbs-up"></i><?= $post->like_count?></button>
@@ -72,3 +65,4 @@ if(isset($_GET['id']) && $_GET['id'] > 0) {
 </ul>
         </div>
 </div>
+<?php require_once 'footer.php'; ?>

@@ -4,7 +4,6 @@ require_once 'functions.php';
 require_once 'header_user.php';
 $articles = getArticles();
 ?>
-
 <section>
     <div id="content">
         <div class="description">
@@ -14,14 +13,14 @@ $articles = getArticles();
         </div>
         <?php foreach($articles as $article): ?>
             <div class="listing">
-                        <div class="content">
+                    <div class="content">
                         <?= $article->logo ?>
-                        <h3><?= $article->titre ?></h3>
-                        <p><?= $article->extrait ?><a class="personal-link-acteur" href="#">Formation & Co</a>
-                        </p>
+                        <h2><?= $article->titre ?></h2>
+                        <?= $article->extrait ?><a class="personal-link-acteur" href="#">Formation & Co</a>
                         <p class="link"><a href="article.php?id=<?= $article->id ?>">Lire la suite</a></p>
-                        </div>
-                </div>
+                    </div>
+            </div>
             <?php endforeach; ?>
+    </div>
 </section>
 <?php require_once 'footer.php'; ?>
