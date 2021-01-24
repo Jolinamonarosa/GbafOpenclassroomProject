@@ -69,8 +69,8 @@ if(isset($_FILES['avatar']) AND !empty($_FILES['avatar']['name'])) {
   }
 }
 
-
 ?>
+<a href="accueil.php" class="nav-link"><img src="https://img.icons8.com/wired/64/000000/long-arrow-left.png"/></a>
     <div id="container_profil">
     <form action="" method="POST" enctype="multipart/form-data">
     </br></br></br></br></br>

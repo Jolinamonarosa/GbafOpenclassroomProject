@@ -2,7 +2,7 @@
   <?php require 'header.php'; ?>
     <div id="container_inscription">
       <form action="verif_inscription.php" method="POST">
-      </br></br></br></br>
+      </br></br></br>
           <h1>Inscription</h1>
             <b>Civilité :</b><br/>
             <input type="radio" name="civi2" value="Mme" /> Madame
@@ -52,7 +52,7 @@
                           <input type="reponse" style="width: 452px; height: 35px;" placeholder="Votre réponse" name="reponse" />
                           <input type="submit" name="forminscription" value="je m'inscris" />
                         </div>
-      <p>Tout les champs avec un * sont obligatoire !<p>
+      <p>Tout les champs avec un <span class="ast">*</span> sont obligatoire !<p>
       </form>
     </div>
   <br>

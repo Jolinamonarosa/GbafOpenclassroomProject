@@ -1,5 +1,6 @@
-#html{
+#html #body{
     font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
     width: 100%;
     background-color: white;
 }

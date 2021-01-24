@@ -72,8 +72,8 @@ if(isset($_GET['id']) && $_GET['id'] > 0) {
         <p><label for="id_pseudo">Pseuso :</label><br />
         <input type="text" name="id_pseudo" id="id_pseudo" value="<?php if(isset($pseudo)) echo $pseudo ?>"></p>
         <p><label for="comment">Commentaire :</label><br />
-        <textarea name="comment" id="comment" cols="30" rows="8"><?php if(isset($comment)) echo $comment ?></textarea></p>
-        <button type="submit">Envoyer</button>
+        <textarea name="comment" id="comment"><?php if(isset($comment)) echo $comment ?></textarea></p>
+        <input type="submit"></input>
     </form>
     </div>
     <h2>Commentaires :</h2>

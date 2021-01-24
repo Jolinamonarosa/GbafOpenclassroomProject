@@ -2,6 +2,11 @@
 require_once 'database.php';
 require_once 'auth.php';
 forcer_utilisateur_connecte();
+$bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
+$getid = intval($_GET['id']);
+$requser = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
+$requser->execute(array($getid));
+$userinfo = $requser->fetch();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -20,11 +25,10 @@ forcer_utilisateur_connecte();
       </div>
     </div>
     <div id="header_user">
-          <div id="success">
-            <?php if(bonjour_user()): ?>!
-            <?php endif ?>
-          </div>
-            <?php if(est_connecte()): ?>
+        <?php if(bonjour_user()): ?>!
+        <?php endif ?>
+        <?php if(est_connecte()): ?>
+    </div>
           <div id="header_user">
             <a href="deconnexion.php" class="nav-link"><img src="https://img.icons8.com/wired/64/000000/logout-rounded-up.png"/></a>
             <?php endif ?>
@@ -32,6 +36,10 @@ forcer_utilisateur_connecte();
           <div id="header_user">
             <a href="profil.php"><img src="https://img.icons8.com/wired/64/000000/circled-user.png"/></a>
           </div>
+      </div>
+      <div id="header_user">
+        <b><?php echo $userinfo['nom']; ?>
+        <?php echo $userinfo['prenom']; ?></b>
       </div>
   </header>
 </html>
