@@ -5,90 +5,58 @@ header('Location: accueil.php');
     extract($_GET);
     $id = strip_tags($id);
 
-require 'functions.php';
-    if(!empty($_POST)) {
-        extract($_POST);
-        $errors = array();
-        $pseudo = strip_tags($_POST['id_pseudo']);
-        $comment = strip_tags($comment);
-
-        if(empty($pseudo)) {
-            array_push($errors, 'Entrez un pseudo');
-            if(empty($comment)) {
-                array_push($errors, 'Entrez un commentaire');
-                if(count($errors) == 0) {
-                    $comment = addComment($id, $pseudo, $comment);
-
-                    $success = "Votre commentaire a été publié";
-
-                    unset($pseudo);
-                    unset($comment);
-                }
-            }
-        }
-    }
-
+require_once 'functions.php';
     $article = getArticle($id);
     $comments = getComments($id);
 }
-if(isset($_GET['id']) && $_GET['id'] > 0) {
+
+if(isset($_GET['id']) AND !empty($_GET['id'])) {
+    $get_id = htmlspecialchars($_GET['id']);
     $bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
-      $getid = intval($_GET['id']); 
-      $requser = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
-      $requser->execute(array($getid));
-    $userinfo = $requser->fetch();
-  }
-  
-    if(isset($_SESSION['id'])) {
-        $requser= $bdd->prepare("SELECT * FROM membres WHERE pseudo = ?");
-        $requser->execute(array($_SESSION['id']));
-        $user = $requser->fetch();
+    $article = $bdd->prepare('SELECT * FROM partenaire WHERE id = ?');
+    $article->execute(array($get_id));
+
+    if($article->rowCount() == 1) {
+        $article = $article->fetch();
+        $id = $article['id'];
+        $logo = $article['logo'];
+        $titre = $article['titre'];
+        $texte = $article['texte'];
+
+        $likes = $bdd->prepare('SELECT id FROM likes WHERE id_partenaire = ?');
+        $likes->execute(array($id));
+        $likes = $likes->rowCount();
+
+        $dislike = $bdd->prepare('SELECT id FROM dislike WHERE id_partenaire = ?');
+        $dislike->execute(array($id));
+        $dislike = $dislike->rowCount();
+    }else {
+        die("Cet article n'existe pas !");
     }
+}else {
+    die('Erreur');
+}
+
 ?>
 <?php require_once 'header_user.php';?>
 </br></br></br></br>
-<a href="accueil.php" class="nav-link"><img src="https://img.icons8.com/wired/64/000000/long-arrow-left.png"/></a>
+<a href="accueil.php?id=2" class="nav-link"><img src="https://img.icons8.com/wired/64/000000/long-arrow-left.png"/></a>
     <div class="listing">
         <div class="content">
-    <h1><?= $article->logo ?></h1>
-    <p><?= $article->texte ?></p>
+        <h1><?= $article['logo'] ?></h1>
+        <p><?= $article['texte'] ?></p>
+        <div class="vote_bar">
+          <div class="vote_progress"></div>
+          </div>
+        <div class="vote_btns">
+            <form action="" method="POST">
+                <button type="submit" class="vote_btn vote_like"><a href="action.php?t=1&id=<?= $id ?>"><i class="far fa-thumbs-up" style="color: green;"></i></a></button>(<?= $likes ?>)
+            </form>
+            <form action="" method="POST">
+                <button type="submit" class="vote_btn vote_dislike"><a href="action.php?t=2&id=<?= $id ?>"><i class="far fa-thumbs-down" style="color: red;"></i></a></button>(<?= $dislike ?>)
+            </form>
+        </div>
         </div>
     </div>
-    <?php 
-    if(isset($succes))
-        echo $success;
-    
-    if(!empty($errors)):
-    ?>
-
-        <?php foreach($errors as $error): ?>
-        <p><?= $error ?>
-        <?php endforeach; ?>
-
-    <?php endif; ?>
-    <div class="listing">
-        <div class="content">
-    <form action="article.php?id=<?= $article->id ?>" method="POST">
-        <p><label for="id_pseudo">Pseuso :</label><br />
-        <input type="text" name="id_pseudo" id="id_pseudo" value="<?php if(isset($pseudo)) echo $pseudo ?>"></p>
-        <p><label for="comment">Commentaire :</label><br />
-        <textarea name="comment" id="comment"><?php if(isset($comment)) echo $comment ?></textarea></p>
-        <input type="submit"></input>
-    </form>
-    </div>
-    <h2>Commentaires :</h2>
-    <?php
-         $bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
-         $sql = ('SELECT id_pseudo, comment, date FROM commentaires');
-         $req = $bdd->query($sql);
-         while($row =$req->fetch()){
-             ?>
-              <li><b><?php echo $row['id_pseudo'] ?></b>
-              <?php echo $row['date'] ?></br>
-              <?php echo $row['comment'] ?></li>
-              <?php
-         }
-
-        ?>
-</div>
-</body>
+   <?php require_once 'minichat.php'; ?>
+   <?php require_once 'footer.php'; ?>

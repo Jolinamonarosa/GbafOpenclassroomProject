@@ -1,11 +1,12 @@
-#html #body{
-    font-family: 'Montserrat', sans-serif;
-    font-size: 20px;
+html body{
+    font-family: 'Verdana', 'Montserrat', sans-serif;
+    font-size: 13px;
     width: 100%;
+    margin-bottom: 15%;
     background-color: white;
 }
+
 #header {
-	position: fixed;
 	margin-top: 0%;
 	left: 0;
 	width: 100%;
@@ -80,7 +81,7 @@ input[type=submit]:hover {
     border: 1px solid  #da2929;
 }
 
-footer {
+#footer {
     position: fixed;
     display: flex;
     left: 0;
@@ -94,14 +95,7 @@ footer {
 
 #footer a{
     color: white;
-}
-
-.listing {
-    background-color: #FFF;
-    box-shadow: none;
     text-align: center;
-    width: 100%;
-    line-height: 1.8em;
 }
 
 #card {
@@ -179,10 +173,12 @@ textarea {
 .listing {
     width: 90%;
     height: 100%;
+    text-align: center;
     background-color: white;
     box-shadow: 1px 1px 30px -10px;
     margin: 1em auto;
     padding: 1em 1em;
+    line-height: 1.8em;
 }
 
 .top-comment>form{
@@ -265,3 +261,108 @@ ul li {
     list-style: none;
 }
 
+.card-white  .card-heading {
+    color: #333;
+    background-color: #fff;
+    border-color: #ddd;
+    border: 1px solid #dddddd;
+  }
+  .card-white  .card-footer {
+    background-color: #fff;
+    border-color: #ddd;
+  }
+  .card-white .h5 {
+      font-size:14px;
+      font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+  .card-white .time {
+      font-size:12px;
+      font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+  .post .post-heading {
+    height: 95px;
+    padding: 20px 15px;
+  }
+  .post .post-heading .avatar {
+    width: 60px;
+    height: 60px;
+    display: block;
+    margin-right: 15px;
+  }
+  .post .post-heading .meta .title {
+    margin-bottom: 0;
+  }
+  .post .post-heading .meta .title a {
+    color: black;
+  }
+  .post .post-heading .meta .title a:hover {
+    color: #aaaaaa;
+  }
+  .post .post-heading .meta .time {
+    margin-top: 8px;
+    color: #999;
+  }
+  .post .post-image .image {
+    width: 100%;
+    height: auto;
+  }
+  .post .post-description {
+    padding: 15px;
+  }
+  .post .post-description p {
+    font-size: 14px;
+  }
+  .post .post-description .stats {
+    margin-top: 20px;
+  }
+  .post .post-description .stats .stat-item {
+    display: inline-block;
+    margin-right: 15px;
+  }
+  .post .post-description .stats .stat-item .icon {
+    margin-right: 8px;
+  }
+  .post {
+    border-top: 1px solid #ddd;
+    padding: 15px;
+  }
+  .post .input-group-addon a {
+    color: #454545;
+  }
+  .post .comments-list {
+    padding: 0;
+    margin-top: 20px;
+    list-style-type: none;
+  }
+  .post .comments-list .comment {
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+  }
+  .post .comments-list .comment .avatar {
+    width: 35px;
+    height: 35px;
+  }
+  .post .comments-list .comment .comment-heading {
+    display: block;
+    width: 100%;
+  }
+  .post .comments-list .comment .comment-heading .user {
+    font-size: 14px;
+    font-weight: bold;
+    display: inline;
+    margin-top: 0;
+    margin-right: 10px;
+  }
+  .post .comments-list .comment .comment-heading .time {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 0;
+    display: inline;
+  }
+  .post .comments-list .comment .comment-body {
+    margin-left: 50px;
+  }
+  .post .comments-list .comment > .comments-list {
+    margin-left: 50px;
+  }

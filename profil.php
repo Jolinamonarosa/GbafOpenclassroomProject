@@ -3,56 +3,55 @@ require_once 'database.php';
 require_once 'header_user.php';
 
 if(isset($_GET['id']) && $_GET['id'] > 0) {
-  $bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
-	$getid = intval($_GET['id']); //securiser la variable, s'il entre plein de texte, on le converti en nombre
-	$requser = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
-	$requser->execute(array($getid));
-  $userinfo = $requser->fetch(); //affichage des données
+  getPDO();
+	$requser = $bdd->prepare('SELECT * FROM membre WHERE id = ?');
+	$requser->execute(array($_SESSION['id']));
+  $userinfo = $requser->fetch();
 
 //ajouter un filter_var
-  if(isset($_SESSION['id'])) {
-      $requser= $bdd->prepare("SELECT * FROM membres WHERE id = ?");
-      $requser->execute(array($_SESSION['id']));
-      $user = $requser->fetch();
+    if(isset($_SESSION['id'])) {
+        $id = intval($_GET['id']);
+        $requser= $bdd->prepare("SELECT * FROM membre WHERE id = ?");
+        $requser->execute(array($_SESSION['id']));
+        $user = $requser->fetch();
 
-      if(isset($_POST['newpseudo']) && !empty($_POST['newpseudo']) && $_POST['newpseudo'] != $user['pseudo']) {
-        $newpseudo = htmlspecialchars($_POST['newpseudo']);
-        $insertpseudo = $bdd->prepare("UPDATE membres SET pseudo = ? WHERE id = ?");
-        $insertpseudo->execute(array($newpseudo, $_SESSION['id']));
-        header('Location: profil.php?id=' .$_SESSION['id']);
-      }
-
-        if(isset($_POST['newmail']) && !empty($_POST['newmail']) && $_POST['newmail']!= $user['mail']) {
-          $newmail = htmlspecialchars($_POST['newmail']);
-          $insertmail = $bdd->prepare("UPDATE membres SET mail = ? WHERE id = ?");
-          $insertmail->execute(array($newmail, $_SESSION['id']));
+        if(isset($_POST['newpseudo']) && !empty($_POST['newpseudo']) && $_POST['newpseudo'] != $user['pseudo']) {
+          $newpseudo = htmlspecialchars($_POST['newpseudo']);
+          $insertpseudo = $bdd->prepare("UPDATE membre SET pseudo = ? WHERE id = ?");
+          $insertpseudo->execute(array($newpseudo, $_SESSION['id']));
           header('Location: profil.php?id=' .$_SESSION['id']);
         }
 
-          if(isset($_POST['newmdp1']) && !empty($_POST['newmdp1']) && isset($_POST['newmdp2']) && !empty($_POST['newmdp2'])) {
-            $mdp1 = password_hash($_POST['newmdp1'], PASSWORD_BCRYPT);
-            $mdp2 = password_hash($_POST['newmdp2'], PASSWORD_BCRYPT);
+          if(isset($_POST['newmail']) && !empty($_POST['newmail']) && $_POST['newmail']!= $user['mail']) {
+            $newmail = htmlspecialchars($_POST['newmail']);
+            $insertmail = $bdd->prepare("UPDATE membre SET mail = ? WHERE id = ?");
+            $insertmail->execute(array($newmail, $_SESSION['id']));
+            header('Location: profil.php?id=' .$_SESSION['id']);
+          }
 
-            if($mdp1 == $mdp2) {
-              $insertmdp =  $bbd->prepare("UPDATE membres SET mdp = ? WHERE id = ?");
-              $insertmdp->execute(array($mdp1, $_SESSION['id']));
-              header('Location: profil.php?id=' .$_SESSION['id']);
-            }else {
-            $erreur = "Vos deux mots de passe, ne correspondent pas !";
-            }
+            if(isset($_POST['newmdp1']) && !empty($_POST['newmdp1']) && isset($_POST['newmdp2']) && !empty($_POST['newmdp2'])) {
+              $mdp1 = password_hash($_POST['newmdp1'], PASSWORD_DEFAULT);
+              $mdp2 = password_hash($_POST['newmdp2'], PASSWORD_DEFAULT);
+
+                if($mdp1 == $mdp2) {
+                  $insertmdp =  $bbd->prepare("UPDATE membre SET mdp = ? WHERE id = ?");
+                  $insertmdp->execute(array($mdp1, $_SESSION['id']));
+                  header('Location: profil.php?id=' .$_SESSION['id']);
+                }else {
+                $erreur = "Vos deux mots de passe, ne correspondent pas !";
+                }
     }
-}
 if(isset($_FILES['avatar']) AND !empty($_FILES['avatar']['name'])) {
   $tailleMax= 2097152; //2megaoctet
   $extensionsValides = array('jpg', 'jpeg', 'gif', 'png');
   if($_FILES['avatar']['size'] <= $tailleMax) {
     $extensionUpload = strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1)); //mis en minuscule
-  //renvoyer l'extension du fichier avec le point, ignorte le premier caractère de la chaine, prend l'extension, tout ce qui vient après le point
+  //renvoyer l'extension du fichier avec le point, ignore le premier caractère de la chaine, prend l'extension, tout ce qui vient après le point
     if(in_array($extensionUpload, $extensionsValides)) {
       $chemin = "membre/avatars/" .$_SESSION['id'].".".$extensionUpload;
       $resultat = move_uploaded_file($_FILES['avatar']['tmp_name'], $chemin);
       if($resultat) {
-        $updateAvatar = $bdd->prepare('UPDATE membres SET avatar = :avatar WHERE id = :id');
+        $updateAvatar = $bdd->prepare('UPDATE membre SET avatar = :avatar WHERE id = :id');
         $updateAvatar->execute(array(
           'avatar' => $_SESSION['id'].".".$extensionUpload,
           'id' => $_SESSION['id']
@@ -70,10 +69,10 @@ if(isset($_FILES['avatar']) AND !empty($_FILES['avatar']['name'])) {
 }
 
 ?>
-<a href="accueil.php" class="nav-link"><img src="https://img.icons8.com/wired/64/000000/long-arrow-left.png"/></a>
+<a href="accueil.php?id=2" class="nav-link"><img src="https://img.icons8.com/wired/64/000000/long-arrow-left.png"/></a>
     <div id="container_profil">
     <form action="" method="POST" enctype="multipart/form-data">
-    </br></br></br></br></br>
+    </br></br></br>
       <h1>Mon profil</h1>
       <div class="champs">
         <label for="pseudo"><b>Pseudo :</b><span class="ast">*</span></label>
@@ -118,9 +117,9 @@ if(isset($_FILES['avatar']) AND !empty($_FILES['avatar']['name'])) {
     <input type="submit" name="editionprofil" value="Mettre à jour mon profil"/>
     </div>
     </form>
-    <?php if(isset($erreur)) { echo $erreur; } ?>
     <?php
     }
+}
 	?>
 </div>
 <br>

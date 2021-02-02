@@ -2,7 +2,9 @@
   <?php require 'header.php'; ?>
     <div id="container_inscription">
       <form action="verif_inscription.php" method="POST">
-      </br></br></br>
+      <br/><br/> <br/><br/> <br/> <br/><br/>
+      <div class="listing">
+        <div class="content">
           <h1>Inscription</h1>
             <b>Civilité :</b><br/>
             <input type="radio" name="civi2" value="Mme" /> Madame
@@ -22,9 +24,8 @@
             </div>
               <div class="champs">
                 <label for="mail"><b>Email :</b><span class="ast">*</span></br></label>
-                <input type="email"  style="width: 452px; height: 35px;" placeholder="Entrer votre email" id="mail" name="mail" required>
+                <input type="email"  style="width: 400px; height: 35px;" placeholder="Entrer votre email" id="mail" name="mail" required>
               </div>
-              </br>
                 <div class="champs">
                   <label for="mdp"><b>Mot de passe :</b><span class="ast">*</span></label>
                   <input type="password" placeholder="Entrer votre mot de passe" id="mdp" name="mdp" required>
@@ -49,11 +50,13 @@
                   </br>
                         <div class="champs">
                           <label><b>Réponse à la question secrète :</b><span class="ast">*</span></br></label>
-                          <input type="reponse" style="width: 452px; height: 35px;" placeholder="Votre réponse" name="reponse" />
+                          <input type="reponse" style="width: 400px; height: 35px;" placeholder="Votre réponse" name="reponse" />
                           <input type="submit" name="forminscription" value="je m'inscris" />
                         </div>
       <p>Tout les champs avec un <span class="ast">*</span> sont obligatoire !<p>
       </form>
+      </div>
+    </div>
     </div>
   <br>
 <?php require 'footer.php'; ?>

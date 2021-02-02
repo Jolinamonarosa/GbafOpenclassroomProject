@@ -1,68 +1,74 @@
 <?php
+session_start();
 require_once 'database.php';
-require "vote.php";
-$vote = false;
-if(isset($_GET['id']) && $_GET['id'] > 0) {
-  $bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
-	$getid = intval($_GET['id']); 
-	$requser = $bdd->prepare('SELECT * FROM membres WHERE id = ?');
-	$requser->execute(array($getid));
-  $userinfo = $requser->fetch();
-}
+$msg = null;
+$bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
+  if(isset($_GET['id']) && !empty($_GET['id'])) {
+      $getid = htmlspecialchars($_GET['id']);
+      $partenaire = $bdd->prepare('SELECT * FROM partenaire WHERE id = ?');
+      $partenaire->execute(array($getid));
+      $partenaire = $partenaire->fetch();
 
-  if(isset($_SESSION['id'])) {
-      $requser= $bdd->prepare("SELECT * FROM membres WHERE id = ?");
-      $requser->execute(array($_SESSION['id']));
-      $user = $requser->fetch();
-  }
+        if(isset($_POST['submit_comment'])) {
+            if(isset($_POST['id_pseudo'], $_POST['comment']) && !empty($_POST['id_pseudo']) && !empty($_POST['comment'])) {
+                $pseudo = htmlspecialchars($_POST['id_pseudo']);
+                $comment = htmlspecialchars($_POST['comment']);
+                date_default_timezone_set ('Europe/Paris');
+                $date = date('d/m/Y à H:i:s');
+                $insert = $bdd->prepare('INSERT INTO commentaires (id_partenaire, id_pseudo, comment, date)
+                VALUES(:id_partenaire, :id_pseudo, :comment, NOW())');
+                $insert->execute(array(
+                    'id_partenaire'=>$partenaire,
+                    'id_pseudo'=>$pseudo,
+                    'comment'=>$comment));
+                    $result = $insert->fetch();
+                $msg="Votre commentaire a bien été posté !";
+            }else {
+                $msg="Tous les champs doivent être complétés !";
+                }
+        }
+    }
 ?>
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="utf-8">
-    <title>Header GBAF</title>
-    <link rel="stylesheet" href="style.css" media="screen"/>
-    <link rel="icon" href="images/logo_gbaf.jpg" />
-    <script src="https://kit.fontawesome.com/a5f9819284.js" crossorigin="anonymous"></script>
-  </head>
-
-        <div class="vote_bar">
-          <div class="vote_progress" style="width:<?= ($post->like_count + $post->dislike_count) == 0 ? 100 : round(100 * ($post->like_count / ($post->like_count + $post->dislike_count))); ?>%;"></div>
-          </div>
-        <div class="vote_btns">
-            <form action="like.php?ref=articles&ref_id=9&vote=1" method="POST">
-                <button type="submit" class="vote_btn vote_like"><i class="far fa-thumbs-up"></i><?= $post->like_count?></button>
-            </form>
-            <form action="like.php?ref=articles&ref_id=9&vote=1" method="POST">
-                <button type="submit" class="vote_btn vote_dislike"><i class="far fa-thumbs-down"></i><?= $post->dislike_count?></button>
-            </form>
-        </div>
-        <form action="minichat_post.php" method="post">
-        <p>
-        <label for="id_pseudo">Pseudo</label> : </br><input type="text" style="width: 400px; height: 30px" name="id_pseudo" id="id_pseudo" value="<?php echo $userinfo['pseudo']; ?>" /><br />
-        <label for="contenu">Message</label> : </br><textarea name="contenu" type ="text" id="contenu" style="width: 452px; height: 35px;" placeholder="Votre commentaire..."></textarea><br>
-        <input type="submit" value="PUBLIER" id="submit_commentaire" name="submit_commentaire">
-      	</p>
-        </form>
-        <ul>
-        <?php
-         $bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
-         $sql = ('SELECT id_pseudo, contenu, date FROM commentaires');
-         $req = $bdd->query($sql);
-         while($row =$req->fetch()){
-             ?>
-          <div id="section_commentaire">
-          <section>
-              <li><b><?php echo $row['id_pseudo'] ?></b>
-              <?php echo $row['date'] ?></br>
-              <?php echo $row['contenu'] ?></li>
-         </section>
-         </div>
-             <?php
-         }
-
-        ?>
-</ul>
-        </div>
+<div class="listing">
+        <div class="content">
+    <form action="" method="POST">
+    <?= $msg ?> <br/><br/>
+    <input type="text" name="id_pseudo" value="<?= $pseudo ?>"></input><br/>
+        <textarea name="comment" id="comment" placeholder="Votre commentaire..."></textarea></p>
+        <input type="hidden" value="<?= $partenaire ?>" name="">
+        <input type="submit" name="submit_comment"></input>
+    </form>
+    </div>
 </div>
-<?php require_once 'footer.php'; ?>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <div class="card card-white post">
+                <div class="post-heading">
+                    <div class="float-left image">
+                        <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">
+                    </div>
+                    <div class="float-left meta">
+                        <div class="title h5">
+                        <?php
+                            $bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
+                            $sql = ('SELECT id_pseudo, comment, date FROM commentaires');
+                            $req = $bdd->query($sql);
+                            while($row =$req->fetch()){
+                                ?>
+                            <a href="#"><b><?php echo $row['id_pseudo']; ?></b></a>
+                            <p>a commenté</p>
+                        </div>
+                        <h6 class="text-muted time"><?php echo $row['date']; ?></h6>
+                    </div>
+                </div> 
+                <div class="post-description"> 
+                    <p><?php echo $row['comment']; ?></p>
+                    <?php
+                    }
+                ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
