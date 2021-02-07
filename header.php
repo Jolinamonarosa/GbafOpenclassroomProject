@@ -15,4 +15,3 @@
           <a href="connexion.php"><img src="images/logo_gbaf.jpg"></a>
       </div>
     </header>
-</html>

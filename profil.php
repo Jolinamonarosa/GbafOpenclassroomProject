@@ -1,73 +1,40 @@
 <?php
-require_once 'database.php';
+session_start();
+$id = $_SESSION['id'];
+$erreur = null;
+$bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
+
 require_once 'header_user.php';
 
 if(isset($_GET['id']) && $_GET['id'] > 0) {
-  getPDO();
-	$requser = $bdd->prepare('SELECT * FROM membre WHERE id = ?');
-	$requser->execute(array($_SESSION['id']));
+	$requser = $bdd->prepare('SELECT * FROM membre WHERE id = :id');
+	$requser->execute(array(
+    'id' => $id));
   $userinfo = $requser->fetch();
 
-//ajouter un filter_var
-    if(isset($_SESSION['id'])) {
-        $id = intval($_GET['id']);
-        $requser= $bdd->prepare("SELECT * FROM membre WHERE id = ?");
-        $requser->execute(array($_SESSION['id']));
-        $user = $requser->fetch();
+  if (isset($_POST['editionprofil']) ){
+    if((!empty($_POST['newpseudo'])) && (!empty($_POST['newmail'])) && (!empty($_POST['newmdp1']))  && (!empty($_POST['newmdp2']))&& (!empty($_POST['newquestion'])) && (!empty($_POST['newreponse']))) {
+      $newpseudo = htmlspecialchars($_POST['newpseudo']);
+      $newmail = htmlspecialchars($_POST['newmail']);
+      $mdp1 = password_hash($_POST['newmdp1'], PASSWORD_DEFAULT);
+      $mdp2 = password_hash($_POST['newmdp2'], PASSWORD_DEFAULT);
+      $newquestion = htmlspecialchars($_POST['newquestion']);
+      $newreponse = htmlspecialchars($_POST['newreponse']);
 
-        if(isset($_POST['newpseudo']) && !empty($_POST['newpseudo']) && $_POST['newpseudo'] != $user['pseudo']) {
-          $newpseudo = htmlspecialchars($_POST['newpseudo']);
-          $insertpseudo = $bdd->prepare("UPDATE membre SET pseudo = ? WHERE id = ?");
-          $insertpseudo->execute(array($newpseudo, $_SESSION['id']));
-          header('Location: profil.php?id=' .$_SESSION['id']);
-        }
-
-          if(isset($_POST['newmail']) && !empty($_POST['newmail']) && $_POST['newmail']!= $user['mail']) {
-            $newmail = htmlspecialchars($_POST['newmail']);
-            $insertmail = $bdd->prepare("UPDATE membre SET mail = ? WHERE id = ?");
-            $insertmail->execute(array($newmail, $_SESSION['id']));
-            header('Location: profil.php?id=' .$_SESSION['id']);
-          }
-
-            if(isset($_POST['newmdp1']) && !empty($_POST['newmdp1']) && isset($_POST['newmdp2']) && !empty($_POST['newmdp2'])) {
-              $mdp1 = password_hash($_POST['newmdp1'], PASSWORD_DEFAULT);
-              $mdp2 = password_hash($_POST['newmdp2'], PASSWORD_DEFAULT);
-
-                if($mdp1 == $mdp2) {
-                  $insertmdp =  $bbd->prepare("UPDATE membre SET mdp = ? WHERE id = ?");
-                  $insertmdp->execute(array($mdp1, $_SESSION['id']));
-                  header('Location: profil.php?id=' .$_SESSION['id']);
-                }else {
-                $erreur = "Vos deux mots de passe, ne correspondent pas !";
-                }
+        $reqprepare= $bdd->prepare("UPDATE membre SET pseudo = :newpseudo, mail = :newmail, mdp = :newmdp1, question = :newquestion, reponse = :newreponse WHERE id= :id");
+        $reqprepare ->execute(array(
+                  'newpseudo'=>$_POST['newpseudo'], 
+                  'newmail'=>$_POST['newmail'], 
+                  'newmdp1'=>$_POST['newmdp1'],
+                  'newquestion'=>$_POST['newquestion'], 
+                  'newreponse'=>$_POST['newreponse'],
+                  'id'=>$id));
+      echo '<br/><br/> Informations modifiées avec succès <br/>';
     }
-if(isset($_FILES['avatar']) AND !empty($_FILES['avatar']['name'])) {
-  $tailleMax= 2097152; //2megaoctet
-  $extensionsValides = array('jpg', 'jpeg', 'gif', 'png');
-  if($_FILES['avatar']['size'] <= $tailleMax) {
-    $extensionUpload = strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1)); //mis en minuscule
-  //renvoyer l'extension du fichier avec le point, ignore le premier caractère de la chaine, prend l'extension, tout ce qui vient après le point
-    if(in_array($extensionUpload, $extensionsValides)) {
-      $chemin = "membre/avatars/" .$_SESSION['id'].".".$extensionUpload;
-      $resultat = move_uploaded_file($_FILES['avatar']['tmp_name'], $chemin);
-      if($resultat) {
-        $updateAvatar = $bdd->prepare('UPDATE membre SET avatar = :avatar WHERE id = :id');
-        $updateAvatar->execute(array(
-          'avatar' => $_SESSION['id'].".".$extensionUpload,
-          'id' => $_SESSION['id']
-        ));
-        header('Location: profil.php');
-      }else {
-        $erreur = "Erreur durant l'importation de votre photo de profil";
-      }
-    }else {
-      $erreur = "Votre photo de profil doit être au format jpg, jpeg, gif ou png";
-    }
-}else {
-    $erreur = "Votre photo de profil ne doit pas dépasser 2Mo";
+  }else {
+    echo 'Vous devez remplir tous les champs !';
   }
 }
-
 ?>
 <a href="accueil.php?id=2" class="nav-link"><img src="https://img.icons8.com/wired/64/000000/long-arrow-left.png"/></a>
     <div id="container_profil">
@@ -98,7 +65,7 @@ if(isset($_FILES['avatar']) AND !empty($_FILES['avatar']['name'])) {
       <div class="form-input form-group">
         <label for="question"><b>Question secrète :</b><span class="ast">*</span></label>
       </br>
-    <select class="form-input form-select form-control" id="question" name="question">
+    <select class="form-input form-select form-control" id="question" name="newquestion"value="<?php echo $userinfo['question']; ?>" >
       <option value="" selected>--Selectionner une question--</option>
       <option value="Quel est le nom de mon premier animal domestique ?">Quel est le nom de mon premier animal domestique ?</option>
       <option value="Quelle est votre couleur préférée ?">Quelle est votre couleur préférée ?</option>
@@ -110,17 +77,14 @@ if(isset($_FILES['avatar']) AND !empty($_FILES['avatar']['name'])) {
 </br>
     <div class="champs">
     <label><b>Réponse à la question secrète :</b><span class="ast">*</span></label>
-    <input type="reponse" style="width: 460px; height: 37px;" name="reponse"  value="<?php echo $userinfo['reponse']; ?>"/>
+    <input type="reponse" style="width: 460px; height: 37px;" name="newreponse"  value="<?php echo $userinfo['reponse']; ?>"/>
     </br></br>
     <label><b>Photo de profil :</b></label></br>
     <input type="file" name="avatar" />
     <input type="submit" name="editionprofil" value="Mettre à jour mon profil"/>
     </div>
+    <p> <?php echo $erreur; ?></p>
     </form>
-    <?php
-    }
-}
-	?>
 </div>
 <br>
 <?php require 'footer.php'; ?>

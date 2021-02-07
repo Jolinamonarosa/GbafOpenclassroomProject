@@ -1,6 +1,6 @@
 <?php 
 require_once 'database.php';
-require_once 'header_user.php';
+require_once 'header_user_article.php';
 
 if(isset($_POST['logo'], $_POST['titre'], $_POST['texte_mini'], $_POST['texte']) && !empty($_POST['logo']) && !empty($_POST['titre']) && !empty($_POST['texte_mini']) && !empty($_POST['texte'])) {
     $logo = ($_POST['logo']);

@@ -1,16 +1,12 @@
 <?php
 require_once 'database.php';
 require_once 'auth.php';
-$id = $_SESSION['id'];
-$erreur = null;
+forcer_utilisateur_connecte();
 $bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
-    if(isset($_SESSION['id'])) {
-        $id = intval($_GET['id']);
-        $requser= $bdd->prepare("SELECT * FROM membre WHERE id = :id");
-        $requser->execute(array(
-          'id' => $id));
-        $userinfo = $requser->fetch();
-        }
+$getid = intval($_GET['id']);
+$requser = $bdd->prepare('SELECT * FROM membre WHERE id = ?');
+$requser->execute(array(2));
+$userinfo = $requser->fetch();
 ?>
 <!DOCTYPE html>
 <html lang="fr">

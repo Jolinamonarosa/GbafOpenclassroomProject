@@ -10,11 +10,11 @@ require_once 'functions.php';
     $comments = getComments($id);
 }
 
-if(isset($_GET['id']) AND !empty($_GET['id'])) {
-    $get_id = htmlspecialchars($_GET['id']);
+if(isset($_GET['id']) && !empty($_GET['id'])) {
+    $getid = htmlspecialchars($_GET['id']);
     $bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
     $article = $bdd->prepare('SELECT * FROM partenaire WHERE id = ?');
-    $article->execute(array($get_id));
+    $article->execute(array($getid));
 
     if($article->rowCount() == 1) {
         $article = $article->fetch();
@@ -38,7 +38,7 @@ if(isset($_GET['id']) AND !empty($_GET['id'])) {
 }
 
 ?>
-<?php require_once 'header_user.php';?>
+<?php require_once 'header_user_article.php';?>
 </br></br></br></br>
 <a href="accueil.php?id=2" class="nav-link"><img src="https://img.icons8.com/wired/64/000000/long-arrow-left.png"/></a>
     <div class="listing">

@@ -1,5 +1,6 @@
 <?php
 session_start();
+$id = $_SESSION['id'];
 require_once 'functions.php';
 $articles = getArticles();
 ?>
@@ -18,7 +19,7 @@ de comptes sur le territoirenational.Le GBAF est le représentant de la professi
 <br/>
 financière française. Sa mission est de promouvoirl'activité bancaire à l’échelle nationale. C’est aussi un interlocuteur privilégié despouvoirs publics.</p>
 </br></br></br></br>
-<section>
+
     <?php foreach($articles as $article): ?>
         <div class="listing">
             <div class="content">
@@ -29,5 +30,4 @@ financière française. Sa mission est de promouvoirl'activité bancaire à l’
             </div>
         </div>
     <?php endforeach; ?>
-</section>
 <?php require_once 'footer.php'; ?>

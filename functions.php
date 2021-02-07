@@ -2,7 +2,7 @@
 //fonction qui reccupère tous les articles
 function getArticles() {
     $bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
-    $req = $bdd->prepare('SELECT id, logo, titre, extrait FROM partenaire ORDER BY id DESC');
+    $req = $bdd->prepare('SELECT id, logo, titre, extrait, texte FROM partenaire ORDER BY id DESC');
     $req->execute();
     $data = $req->fetchAll(PDO::FETCH_OBJ);
     return $data;
@@ -47,3 +47,14 @@ function getComments($id) {
             'comment'=>$comment));
     }
 }
+
+function getComs() {
+
+    $bdd = new PDO('mysql:host=localhost;dbname=gbaf;charset=utf8', 'root', '');
+    $req = $bdd->query('SELECT id_pseudo, comment, date FROM commentaires ORDER BY id DESC');
+    $req->execute();
+    $data = $req->fetchAll(PDO::FETCH_OBJ);
+    return $data;
+    $req->closeCursor();
+}
+                        

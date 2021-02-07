@@ -21,9 +21,9 @@ if((!empty($pseudo))&&(!empty($nom))&&(!empty($prenom))&&(!empty($mail))&&(!empt
                     $pass_hache = password_hash($_POST['mdp'], PASSWORD_DEFAULT);
                     if($mdp == $mdp2){
                         $bdd = getPDO();
-                        $rowEmail = count($bdd, 'mail', $mail);
+                        $rowEmail = count($bdd, 'mail');
                         if($rowEmail == 0){
-                            $insertmbr = $bdd->prepare('INSERT INTO membres(pseudo, nom, prenom, mail, mdp, date_inscription, question, reponse) VALUES(:pseudo, :nom, :prenom, :mail, :mdp, CURDATE(), :question, :reponse)');
+                            $insertmbr = $bdd->prepare('INSERT INTO membre(pseudo, nom, prenom, mail, mdp, date_inscription, question, reponse) VALUES(:pseudo, :nom, :prenom, :mail, :mdp, CURDATE(), :question, :reponse)');
                             $insertmbr->execute(array(
                                 'pseudo'=>$pseudo,
                                 'nom'=>$nom,
